@@ -42,6 +42,11 @@ We used MLflow to track and visualize the performance of each model across multi
 | Linear Regression   | 0.7065   | 0.6955   | 0.7093    | 0.6822 |
 
 
+![ML flow ](https://github.com/user-attachments/assets/b88068ed-6b61-4d79-afb4-1f6e28710f70)
+
+
+![mlflow with visualization](https://github.com/user-attachments/assets/fca6dd6e-c4d7-4975-a38c-f53b49590f3c)
+
 
 ## 📌 Key Takeaways
 
