@@ -12,6 +12,13 @@ Bank churn prediction is a classification problem that aims to identify customer
 
 ## 📁 Project Structure
 
+.
+├── train.py # Core training script
+├── data/ # Dataset (cleaned/preprocessed)
+├── models/ # Saved models (optional)
+├── mlruns/ # MLflow tracking artifacts
+├── README.md # This file
+└── requirements.txt # Dependencies
 
 ---
 
