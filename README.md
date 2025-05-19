@@ -8,19 +8,7 @@ This repository presents an ML pipeline developed to predict customer churn in a
 
 Bank churn prediction is a classification problem that aims to identify customers who are likely to leave the bank. Understanding this behavior helps the bank improve retention strategies.
 
----
 
-## 📁 Project Structure
-
-.
-├── train.py # Core training script
-├── data/ # Dataset (cleaned/preprocessed)
-├── models/ # Saved models (optional)
-├── mlruns/ # MLflow tracking artifacts
-├── README.md # This file
-└── requirements.txt # Dependencies
-
----
 
 ## ✅ Models Considered
 
