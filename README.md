@@ -39,19 +39,9 @@ We used MLflow to track and visualize the performance of each model across multi
 | Random Forest       | 0.7653   | 0.7532   | 0.7794    | 0.7288 |
 | Decision Tree       | 0.6934   | 0.6903   | 0.6852    | 0.6955 |
 | SVM (Linear)        | 0.7629   | 0.7526   | 0.7723    | 0.7338 |
-| sedate-chimp-339    | 0.7065   | 0.6955   | 0.7093    | 0.6822 |
+| Linear Regression   | 0.7065   | 0.6955   | 0.7093    | 0.6822 |
 
-### MLflow Screenshots
 
-#### MLflow Runs Table
-
-![MLflow Runs Table](./ML%20flow%20.png)
-
-#### MLflow Metrics Charts
-
-![MLflow Metrics](./mlflow%20with%20visualization.png)
-
----
 
 ## 📌 Key Takeaways
 
