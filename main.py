@@ -4,13 +4,18 @@ import joblib
 import logging
 import uvicorn
 import numpy as np
+import pandas as pd
+import os
+
+# Ensure logs directory exists
+os.makedirs("logs", exist_ok=True)
 
 # Logging setup
 logging.basicConfig(filename="logs/app.log", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-# Load model and transformer
-model = joblib.load("/content/MLOps-Course/main.py")
-transformer = joblib.load("/content/MLOps-Course/column_transformer.pkl")
+# Load model and transformer (using relative path from script directory)
+model = joblib.load("model.pkl")
+transformer = joblib.load("column_transformer.pkl")
 
 # App init
 app = FastAPI()
@@ -39,8 +44,6 @@ def health():
     logging.info("Health check endpoint hit")
     return {"status": "OK"}
 
-import pandas as pd
-
 @app.post("/predict")
 def predict(data: ModelInput):
     try:
@@ -63,5 +66,6 @@ def predict(data: ModelInput):
         logging.error(f"Prediction failed: {str(e)}")
         raise HTTPException(status_code=500, detail="Prediction failed")
 
-# if __name__ == "__main__":
-#     uvicorn.run(app, host="0.0.0.0", port=8000)
+# ONLY run this locally, not in Colab
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
