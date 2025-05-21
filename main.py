@@ -59,12 +59,17 @@ def predict(data: ModelInput):
             "Geography": data.Geography,
             "Gender": data.Gender
         }])
+
+        print("✅ Incoming DataFrame:")
+        print(input_df)
+
         transformed = transformer.transform(input_df)
         prediction = model.predict(transformed)[0]
         return {"prediction": int(prediction)}
     except Exception as e:
         logging.error(f"Prediction failed: {str(e)}")
-        raise HTTPException(status_code=500, detail="Prediction failed")
+        raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
+
 
 # ONLY run this locally, not in Colab
 if __name__ == "__main__":
