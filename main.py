@@ -6,6 +6,7 @@ import uvicorn
 import numpy as np
 import pandas as pd
 import os
+from prometheus_fastapi_instrumentator import Instrumentator
 
 # Ensure logs directory exists
 os.makedirs("logs", exist_ok=True)
@@ -20,6 +21,7 @@ transformer = joblib.load("column_transformer.pkl")
 # App init
 app = FastAPI()
 
+Instrumentator().instrument(app).expose(app)
 # Define input schema
 class ModelInput(BaseModel):
     CreditScore: float
