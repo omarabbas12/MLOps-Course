@@ -187,8 +187,3 @@ MLOps-Course/
 - Deploy with Docker or Render
 - Monitor model drift and retrain
 
----
-
-## 📬 Contact
-
-For questions, contact [yourname@domain.com](mailto:yourname@domain.com) or open an issue.
