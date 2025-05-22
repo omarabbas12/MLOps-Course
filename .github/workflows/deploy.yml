@@ -86,7 +86,7 @@ jobs:
           # Run the new container
           docker run -d \
             --name churn-container \
-            -p 80:80 \  # Change this if your app runs on a different port
+            -p 80:80 \
             ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO_NAME }}:${{ env.IMAGE_TAG }}
 
 
