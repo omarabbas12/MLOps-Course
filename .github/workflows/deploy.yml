@@ -77,6 +77,6 @@ jobs:
         script: |
           cd /home/${{ secrets.EC2_USERNAME }}/app
           docker pull ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO_NAME }}:${{ env.IMAGE_TAG }}
-          docker-compose up -d
+          docker compose up -d
 
 
