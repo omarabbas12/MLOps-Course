@@ -53,7 +53,7 @@ jobs:
       run: |
         ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
         ECR_REPO=${{ secrets.ECR_REPO_NAME }}
-        FULL_IMAGE=$ECR_REGISTRY/$ECR_REPO:$IMAGE_TAG
+        FULL_IMAGE=$ECR_REGISTRY/$ECR_REPO:$omar509
         docker build -t $FULL_IMAGE .
         docker push $FULL_IMAGE
 
@@ -78,6 +78,6 @@ jobs:
           cd /home/${{ secrets.EC2_USERNAME }}/app
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
           docker pull ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO_NAME }}:${{ env.IMAGE_TAG }}
-          docker-compose down
-          docker-compose up -d
+          docker compose down
+          docker compose up -d
 
