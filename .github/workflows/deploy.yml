@@ -68,15 +68,41 @@ jobs:
         target: "/home/${{ secrets.EC2_USERNAME }}/app"
 
     ### 5 - Inside EC2 ==> clone repo (if not already)
-    - name: SSH into EC2 and deploy with Docker Compose
+    - name: SSH into EC2, clone repo, install Docker Compose, and deploy
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.EC2_KEY }}
         script: |
-          cd /home/${{ secrets.EC2_USERNAME }}/app
+          # Change to the home directory
+          cd /home/${{ secrets.EC2_USERNAME }}
+
+          # Clone the repository if it doesn't exist
+          if [ ! -d "app" ]; then
+            git clone https://github.com/${{ github.repository }}.git app
+          else
+            cd app
+            git pull
+            cd ..
+          fi
+
+          # Install Docker Compose V2 if not available
+          if ! docker compose version &>/dev/null; then
+            DOCKER_COMPOSE_VERSION="v2.23.3"
+            curl -SL https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+            chmod +x /usr/local/bin/docker-compose
+            ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose || true
+          fi
+
+          # Navigate to your app directory
+          cd app
+
+          # Pull latest image from ECR
           docker pull ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO_NAME }}:${{ env.IMAGE_TAG }}
-          docker-compose down
-          docker-compose up -d
+
+          # Use Docker Compose to redeploy
+          docker compose down
+          docker compose up -d
+
 
