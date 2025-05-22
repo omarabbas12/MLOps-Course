@@ -35,7 +35,7 @@ jobs:
     ### 2 - Build  API Image in the Runner
     - name: Build Docker image
       run: docker build -t churn-prediction:$omar509 .
-    ### 3 - Push to ECR called churn-prediction with tag omar123
+    ### 3 - Push to ECR called churn-prediction with tag omar509
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
       with:
@@ -49,10 +49,16 @@ jobs:
 
     - name: Build, Tag, and Push Docker image
       run: |
+        echo "Logging build context..."
+        echo "IMAGE_TAG=${IMAGE_TAG}"
+
+        # Setup variables
         ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
         ECR_REPO=${{ secrets.ECR_REPO_NAME }}
-        FULL_IMAGE="$ECR_REGISTRY/$ECR_REPO:${{ env.IMAGE_TAG }}"
+        FULL_IMAGE="$ECR_REGISTRY/$ECR_REPO:$IMAGE_TAG"
+
+        echo "Building image with tag: $FULL_IMAGE"
         
-        echo "Building image: $FULL_IMAGE"
-        docker build -t $FULL_IMAGE .
-        docker push $FULL_IMAGE
+        docker build -t "$FULL_IMAGE" .
+        docker push "$FULL_IMAGE"
+
