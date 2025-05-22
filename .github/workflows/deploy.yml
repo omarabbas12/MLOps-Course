@@ -34,4 +34,23 @@ jobs:
       run: pytest
     ### 2 - Build  API Image in the Runner
     - name: Build Docker image
-      run: docker build -t churn-prediction:$IMAGE_TAG .
+      run: docker build -t churn-prediction:$omar509 .
+    ### 3 - Push to ECR called churn-prediction with tag omar123
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Login to ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Build, Tag, and Push Docker image
+      run: |
+        ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
+        ECR_REPO=${{ secrets.ECR_REPO_NAME }}
+        FULL_IMAGE=$ECR_REGISTRY/$ECR_REPO:$IMAGE_TAG
+        docker build -t $FULL_IMAGE .
+        docker push $FULL_IMAGE
