@@ -51,6 +51,8 @@ jobs:
       run: |
         ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
         ECR_REPO=${{ secrets.ECR_REPO_NAME }}
-        FULL_IMAGE=$ECR_REGISTRY/$ECR_REPO:$IMAGE_TAG
+        FULL_IMAGE="$ECR_REGISTRY/$ECR_REPO:${{ env.IMAGE_TAG }}"
+        
+        echo "Building image: $FULL_IMAGE"
         docker build -t $FULL_IMAGE .
         docker push $FULL_IMAGE
