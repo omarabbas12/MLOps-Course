@@ -6,3 +6,4 @@ pandas
 joblib
 numpy
 prometheus_fastapi_instrumentator
+pytest
