@@ -75,10 +75,26 @@ jobs:
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.EC2_KEY }}
         script: |
+          # Install docker-compose if not found
+          if ! command -v docker-compose &> /dev/null; then
+            sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
+            sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+          fi
+
+          # Make app directory and clone if not already
           mkdir -p /home/${{ secrets.EC2_USERNAME }}/app
           cd /home/${{ secrets.EC2_USERNAME }}/app
+
+          if [ ! -d "your-repo-name" ]; then
+            git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+          fi
+
+          cd your-repo-name
+
           docker pull ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO_NAME }}:${{ env.IMAGE_TAG }}
           docker-compose down
           docker-compose up -d
+
 
 

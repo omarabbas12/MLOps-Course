@@ -1,11 +1,7 @@
 version: "3.8"
 
 services:
-  api:
-    image: <AKIAQ4J5YCJYIGALXB7V>.dkr.ecr.<region>.amazonaws.com/<churn-prediction>:omar509
-    ports:
-      - "80:80"
-    restart: always
+
   fastapi:
     build: .
     container_name: fastapi
