@@ -80,13 +80,13 @@ jobs:
           docker pull ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO_NAME }}:${{ env.IMAGE_TAG }}
 
           # Stop and remove any running container with the same name
-          docker stop churn-container || true
-          docker rm churn-container || true
+          docker stop churn-prediction || true
+          docker rm churn-prediction || true
 
           # Run the new container
           docker run -d \
-            --name churn-container \
-            -p 80:80 \
+            --name churn-prediction \
+            -p 80:8000 \
             ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO_NAME }}:${{ env.IMAGE_TAG }}
 
 
